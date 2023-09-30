@@ -50,7 +50,6 @@ if __name__ == "__main__":
         tempo.append(tracks[i].features[0]["tempo"])
         energy.append(tracks[i].features[0]["energy"])
         danceability.append(tracks[i].features[0]["danceability"])
-        
+
     for i in range(len(tracks)):
         print(f"Song {i + 1}. {tracks[i].name}, Tempo: {tempo[i]}, Energy: {energy[i]}, Danceability: {danceability[i]}")
-
