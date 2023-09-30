@@ -1,8 +1,7 @@
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyClientCredentials
-
-
 from typing import Iterable, NamedTuple, List
+import time
 
 
 class Track(NamedTuple):
@@ -10,6 +9,8 @@ class Track(NamedTuple):
     uri: str
     name: str
     features: List[str]
+    popularity: int
+
 
     @classmethod
     def from_spotify(cls, spotify: Spotify, track: dict) -> 'Track':
@@ -17,7 +18,8 @@ class Track(NamedTuple):
         return cls(
             uri=uri,
             name=track["track"]["name"],
-            features=spotify.audio_features(uri)
+            features=spotify.audio_features(uri),
+            popularity=track["track"]["popularity"]
         )
 
 
@@ -32,8 +34,8 @@ def get_tracks_from_playlist(client: Spotify, playlist_name: str) -> Iterable[Tr
 
 
 if __name__ == "__main__":
-    CLIENT_ID = "9f2e164958a1419d93e09f3c2ea3379f"
-    CLIENT_SECRET = "79266eaf7b1a4cc5b8f3d1beccd09cbe"
+    CLIENT_ID = "25b56816c7b3408db0e786884e0b65ee"
+    CLIENT_SECRET = "ce27527bba0e42778755095ee5cb9a91"
     # PLAYLIST_LINK = "https://open.spotify.com/playlist/37i9dQZF1EQqedj0y9Uwvu"
     PLAYLIST_LINK = "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M"
 
@@ -46,6 +48,16 @@ if __name__ == "__main__":
     tempo = []
     energy = []
     danceability = []
+
+    print(tracks[0].popularity)
+
+    time.sleep(2)
+    # print(tracks[0].uri)
+    # track = spotify.track("3rUGC1vUpkDG9CZFHMur1t")
+    # print(track["popularity"])
+    # print(track["total"])
+          
+
     for i in range(len(tracks)):
         tempo.append(tracks[i].features[0]["tempo"])
         energy.append(tracks[i].features[0]["energy"])
